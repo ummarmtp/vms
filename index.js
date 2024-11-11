@@ -106,6 +106,7 @@ wssESP32.on('connection', (ws) => {
 
   ws.on('close', () => {
       console.log('ESP32 WebSocket connection closed');
+      esp32Connection = null;
   });
 });
 
