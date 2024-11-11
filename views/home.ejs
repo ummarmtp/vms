@@ -39,7 +39,7 @@
              // Connect to the WebSocket server
             //  const socket = new WebSocket('ws://localhost:3000');
             const urlParams = new URLSearchParams(window.location.search);
-          const port = urlParams.get('port') || 3000; // Default port as a fallback
+          const port = urlParams.get('port') || 10000; // Default port as a fallback
  
             const socket=new WebSocket(`ws://vms-38ho.onrender.com:${port}`);
         
