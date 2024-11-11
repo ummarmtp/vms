@@ -41,7 +41,7 @@
             const urlParams = new URLSearchParams(window.location.search);
           const port = urlParams.get('port') || 10000; // Default port as a fallback
  
-            const socket=new WebSocket(`ws://vms-38ho.onrender.com:${port}`);
+            const socket=new WebSocket('ws://vms-38ho.onrender.com:10000');
         
         // socket.onopen = () => {
         //     console.log('WebSocket connection established');
