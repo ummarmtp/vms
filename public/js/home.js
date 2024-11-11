@@ -208,20 +208,19 @@ sendDevice.addEventListener('click', ()=>{
       //const sum4D = data.flat(Infinity).reduce((acc, val) => acc + val, 0);
 
 
-   
+    
 
       
-      document.getElementById('sendButton').addEventListener('click', () => {
-        if (socket.readyState === WebSocket.OPEN) {
-            const payload={
-                data: data,
-                screenTime:screenTime
-              }
-            socket.send(JSON.stringify(payload));
-        } else {
-            console.error('WebSocket is not open. Current state: ' + socket.readyState);
-        }
-    });
+
+      if (socket.readyState === WebSocket.OPEN) {
+        const payload={
+            data: data,
+            screenTime:screenTime
+          }
+        socket.send(JSON.stringify(payload));
+    } else {
+        console.log('WebSocket is not open. Current state: ' + socket.readyState);
+    }
 
 
 
