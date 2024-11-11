@@ -21,6 +21,10 @@ const port =process.env.PORT || 3000;;
 app.get('/', async(req, res) => {
     res.render('home');
   });
+  app.get('/esp32', async(req, res) => {
+    res.send('hello');
+    console.log('hello');
+  });
 
  
 
@@ -47,33 +51,33 @@ server.listen(port, () => {
 // WebSocket connection logic
 wssweb.on('connection', (ws) => {
     console.log('New WebSocket connection');
-    console.log(screenTime);
+    
 
     // Send a message when a client connects
     //ws.send('Hello from WebSocket server');
 
     // Handle incoming messages
-    wssweb.on('message', (message) => {
-      try{
+    ws.on('message', (message) => {
+      // try{
        console.log(`Received:`);
        const receivedArray = JSON.parse(message);
       // const checksome=receivedArray.checkSome;
         data=receivedArray.data;
        screenTime=receivedArray.screenTime;
        console.log('screen1', screenTime);
-       if (esp32Connection && esp32Connection.readyState === WebSocket.OPEN) {
-        esp32Connection.send(JSON.stringify({ data, screenTime }));
-        //console.log('Data sent to ESP32:', { data, screenTime });
-        wssweb.send("message sent");
-    }
-    else{
-      console.log('device is not online');
-      wssweb.send("Device is not active");
-    }
-  } catch (error) {
-    console.error('Error handling message from web client:', error);
-}
-      // console.log('screenTime=:', screenTime);
+      //  if (esp32Connection && esp32Connection.readyState === WebSocket.OPEN) {
+    //     esp32Connection.send(JSON.stringify({ data, screenTime }));
+    //     //console.log('Data sent to ESP32:', { data, screenTime });
+    //     wssweb.send("message sent");
+    // }
+    // else{
+    //   console.log('device is not online');
+    //   wssweb.send("Device is not active");
+    // }
+//   } catch (error) {
+//     console.error('Error handling message from web client:', error);
+// }
+//       // console.log('screenTime=:', screenTime);
       //console.log('checksome=:', checksome);
       
     });
