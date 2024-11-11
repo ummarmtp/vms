@@ -218,7 +218,7 @@ sendDevice.addEventListener('click', ()=>{
         if (socket.readyState === WebSocket.OPEN) {
             socket.send(JSON.stringify(payload));
         } else {
-            console.log('WebSocket is not open. Current state: ' + socket.readyState);
+            console.error('WebSocket is not open. Current state: ' + socket.readyState);
         }
     });
 
