@@ -8,7 +8,7 @@ let data=0;
 let screenTime=0;
 const wssweb = new WebSocket.Server({ noServer: true });
 const wssESP32 = new WebSocket.Server({ noServer: true });
-
+let esp32Connection = null;
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({extended :false}))
@@ -58,27 +58,26 @@ wssweb.on('connection', (ws) => {
 
     // Handle incoming messages
     ws.on('message', (message) => {
-      // try{
+       try{
        console.log(`Received:`);
        const receivedArray = JSON.parse(message);
       // const checksome=receivedArray.checkSome;
         data=receivedArray.data;
        screenTime=receivedArray.screenTime;
-       console.log('screen1', screenTime);
-      //  if (esp32Connection && esp32Connection.readyState === WebSocket.OPEN) {
-    //     esp32Connection.send(JSON.stringify({ data, screenTime }));
-    //     //console.log('Data sent to ESP32:', { data, screenTime });
-    //     wssweb.send("message sent");
-    // }
-    // else{
-    //   console.log('device is not online');
-    //   wssweb.send("Device is not active");
-    // }
-//   } catch (error) {
-//     console.error('Error handling message from web client:', error);
-// }
-//       // console.log('screenTime=:', screenTime);
-      //console.log('checksome=:', checksome);
+      // console.log('screen1', screenTime);
+       if (esp32Connection && esp32Connection.readyState === WebSocket.OPEN) {
+        esp32Connection.send(JSON.stringify({ data, screenTime }));
+        //console.log('Data sent to ESP32:', { data, screenTime });
+        wssweb.send("message sent");
+    }
+    else{
+      console.log('device is not online');
+      //wssweb.send("Device is not active");
+    }
+  } catch (error) {
+    console.error('Error handling message from web client:', error);
+}
+    
       
     });
 
