@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home page</title>
+    <link rel="stylesheet" type="text/css" href="/css/home.css">
+</head>
+
+<body>
+
+
+    <center>
+        <h1>MTP-VMS Interface</h1>
+    </center>
+    <div class="navButtton">
+        <button class="mainButton" id="clearScreen">Clear screen</button>
+        <button class="mainButton" id="fillScreen">Fill screen</button>
+
+
+        <div class="screenButton">
+            <button class="button on">1</button>
+            <button class="button">2</button>
+            <button class="button">3</button>
+            <button class="button">4</button>
+        </div>
+        <input type="number" id="screenTime" name="number">Seconds
+        <button class="mainButton" id="sendDevice" style="margin-right: 10px;">Send to Device</button>
+    </div>
+
+
+    </div>
+    <div id="led-matrix"></div>
+
+    <!-- <script src="script.js"></script> -->
+    <script type="text/javascript" src="/js/home.js"></script>
+    <script>
+             // Connect to the WebSocket server
+             const socket = new WebSocket('ws://localhost:3000');
+        
+        // socket.onopen = () => {
+        //     console.log('WebSocket connection established');
+        // };
+        
+         socket.onmessage = (event) => {
+             const serverMessage = event.data;
+             alert(serverMessage);
+            // document.getElementById('server-message').innerText = serverMessage;
+         };
+        
+        // Send a message to the WebSocket server when the button is clicked
+        // document.getElementById('sendMessageBtn').addEventListener('click', () => {
+        //     socket.send('Hello from the client!');
+        // });
+
+    </script>
+
+</body>
+
+</html>

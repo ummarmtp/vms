@@ -1,0 +1,21 @@
+{
+  "name": "interface",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "author": "ummar",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.1",
+    "node": "^22.11.0",
+    "nodemon": "^3.1.7",
+    "sharp": "^0.33.5",
+    "socket.io": "^4.8.1",
+    "ws": "^8.18.0"
+  }
+}

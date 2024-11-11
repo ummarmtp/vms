@@ -1,0 +1,74 @@
+body{
+    background-color: #5a1e1f;
+    color: rgb(215, 207, 207);
+   
+}
+.navButtton{
+    display: flex;        /* Use flexbox layout */
+  flex-wrap: wrap;        /* Allow wrapping if there are more modules than can fit */
+     gap: 10px;              /* Space between modules */ 
+    justify-content: center;
+    margin :10px;
+
+}
+.mainButton
+{
+    height: 25px;
+    background-color: rgb(215, 207, 207);
+    border: rgb(215, 207, 207);
+    margin-left: 5px;
+
+}
+#screenTime{
+    width: 35px;
+    height: 25px;
+    margin: 1px;
+    background-color: rgb(215, 207, 207);
+    border: rgb(215, 207, 207);
+    
+}
+.screenButton{
+    display: flex;        /* Use flexbox layout */
+    width: 90px;
+    height: 25px;
+    background-color: rgb(215, 207, 207);
+    border: rgb(215, 207, 207);
+    cursor: pointer;
+    margin: 1px;
+}
+button.on{
+    background-color: rgb(255, 69, 0);
+}
+#led-matrix {
+    display: flex;        /* Use flexbox layout */
+    flex-wrap: wrap;      /* Allow wrapping if there are more modules than can fit */
+    /* gap: 10px;            Space between modules */
+    justify-content: center;
+    margin :10px;
+   
+}
+
+.horizontal {
+    display: flex; /* Align modules horizontally */
+   /* gap: 10px;  Space between modules in a row */
+   background-color:  rgb(215, 207, 207);
+}
+.cellcol {
+    display: flex;
+    flex-direction: column;
+}
+
+.cellrow {
+    display: flex;
+}
+
+.cell {
+    width: 15px;
+    height: 15px;
+    background-color: black;
+    cursor: pointer;
+    margin: 1px;
+}
+.cell.on {
+    background-color: rgb(255, 69, 0);
+}
