@@ -216,7 +216,7 @@ sendDevice.addEventListener('click', ()=>{
         const payload={
             data: data,
             screenTime:screenTime,
-            totalScreen:4
+            //totalScreen:4
           }
         socket.send(JSON.stringify(payload));
     } else {
