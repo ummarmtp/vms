@@ -1,9 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const WebSocket = require('ws');
-const http = require('http');
+const https = require('https');
 const app = express();
-const server = http.createServer(app);
+const server = https.createServer(app);
 let data=0;
 let screenTime=0;
 const wssweb = new WebSocket.Server({ noServer: true });
