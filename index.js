@@ -1,9 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const WebSocket = require('ws');
-const https = require('https');
+const http = require('http');
 const app = express();
-const server = https.createServer(app);
+const server = http.createServer(app);
 let data=0;
 let screenTime=0;
 const wssweb = new WebSocket.Server({ noServer: true });
@@ -28,9 +28,7 @@ app.get('/', async(req, res) => {
 
  
 
-server.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
-  });
+
 
   server.on('upgrade', (request, socket, head) => {
     const url = request.url;
@@ -110,6 +108,9 @@ wssESP32.on('connection', (ws) => {
   });
 });
 
+server.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`);
+});
   // ****
 // const sharp = require('sharp');
 
