@@ -22,10 +22,7 @@ const port =process.env.PORT || 3000;;
 app.get('/', async(req, res) => {
     res.render('home');
   });
-  app.get('/esp32', async(req, res) => {
-    res.send('hello');
-    console.log('hello');
-  });
+
 
  
 
