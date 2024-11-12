@@ -66,7 +66,7 @@ wssweb.on('connection', (ws) => {
        if (esp32Connection && esp32Connection.readyState === WebSocket.OPEN) {
         esp32Connection.send(JSON.stringify({ data, screenTime }));
         //console.log('Data sent to ESP32:', { data, screenTime });
-        wssweb.send("message sent");
+        //wssweb.send("message sent");
     }
     else{
       console.log('device is not online');
