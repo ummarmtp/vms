@@ -215,7 +215,8 @@ sendDevice.addEventListener('click', ()=>{
       if (socket.readyState === WebSocket.OPEN) {
         const payload={
             data: data,
-            screenTime:screenTime
+            screenTime:screenTime,
+            totalScreen:4
           }
         socket.send(JSON.stringify(payload));
     } else {

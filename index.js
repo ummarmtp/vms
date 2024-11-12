@@ -6,6 +6,7 @@ const app = express();
 const server = http.createServer(app);
 let data=0;
 let screenTime=0;
+let totalScreen=0;
 const wssweb = new WebSocket.Server({ noServer: true });
 const wssESP32 = new WebSocket.Server({ noServer: true });
 let esp32Connection = null;
@@ -62,9 +63,10 @@ wssweb.on('connection', (ws) => {
       // const checksome=receivedArray.checkSome;
         data=receivedArray.data;
        screenTime=receivedArray.screenTime;
+       totalScreen=receivedArray.totalScreen;
       // console.log('screen1', screenTime);
        if (esp32Connection && esp32Connection.readyState === WebSocket.OPEN) {
-        esp32Connection.send(JSON.stringify({ data, screenTime }));
+        esp32Connection.send(JSON.stringify({ data, screenTime, totalScreen }));
         //console.log('Data sent to ESP32:', { data, screenTime });
         //wssweb.send("message sent");
     }
