@@ -244,7 +244,7 @@ fillScreen.addEventListener('click', ()=>{
         {
             for(let l=0;l<4;l++)
             {
-                for(let j=0;j<8;j++)
+                for(let j=0;j<7;j++)
                     {
                         data[screen-1][i][l][j]=0;
                     }
@@ -268,7 +268,7 @@ for(let i=0;i<4;i++)
 {
     for(let l=0;l<4;l++)
     {
-        for(let j=0;j<8;j++)
+        for(let j=0;j<7;j++)
             {
                 data[screen-1][i][l][j]=65535;
             }
