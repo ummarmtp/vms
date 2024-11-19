@@ -1,5 +1,15 @@
-
-
+let ImagepixcelModule = Array.from({ length: 4 }, () => Array.from({ length: 7 }, () => Array.from({ length: 7 }, () => Array(8).fill(0))));
+let color=0;
+let imagePixcel=new Array(4);
+for (let i = 0; i < 4; i++) {
+    imagePixcel[i] = new Array(4); // Create the second dimension
+    for (let j = 0; j < 4; j++) {
+        imagePixcel[i][j] = new Array(4); // Create the third dimension
+        for (let k = 0; k < 4; k++) {
+            imagePixcel[i][j][k] = new Array(7).fill(65535);; // Create the fourth dimension
+        }
+    }
+}
 let data = new Array(4); // Create the first dimension
 let screen=1;
 for (let i = 0; i < 4; i++) {
@@ -187,6 +197,7 @@ buttons.forEach(button => {
         button.classList.add('on');
       if(screen!=Number(button.textContent))
       {
+
        
         screen=Number(button.textContent);
         updateScreen(screen, data);
@@ -212,13 +223,13 @@ sendDevice.addEventListener('click', ()=>{
 
       
 
-      if (socket.readyState === WebSocket.OPEN) {
+      if (sendDeviceSocket.readyState === WebSocket.OPEN) {
         const payload={
             data: data,
             screenTime:screenTime,
             //totalScreen:4
           }
-        socket.send(JSON.stringify(payload));
+          sendDeviceSocket.send(JSON.stringify(payload));
     } else {
         console.error('WebSocket is not open. Current state: ' + socket.readyState);
     }
@@ -280,10 +291,59 @@ for(let i=0;i<4;i++)
         }, 100);
     });
 });
-
- 
-
 Time.addEventListener('change', ()=>{
 screenTime[screen-1]=Time.value;
 
 });
+
+///image
+
+function updateScreenImage(screen, ImagepixcelModule) {
+    console.log(color);
+    imagePixcel=ImagepixcelModule;
+    clearScreen.click();
+    const leds = document.querySelectorAll('[class^="led"]');
+    // Ensure the `screen` value is within bounds for your data array
+    if (screen < 1 || screen > data.length) {
+        console.error('Invalid screen index');
+        return;
+    }
+     leds.forEach(led => {
+      
+        const row=Number(led.className.charAt(3));
+        const col=Number(led.className.charAt(4));
+
+        const rowLine=Number(led.className.charAt(6));
+        const posLine=Number(led.className.charAt(5));
+       //console.log(`module${row}${col}${rowLine}${posLine}`);
+
+        let pos;
+        let line;
+        if(rowLine<4)
+            {
+                  line=rowLine;
+                  pos=7-posLine+8;
+            }
+            else{
+                  line=rowLine-4;
+                  pos=7-posLine;
+               
+            }
+       if(ImagepixcelModule[row][col][rowLine][posLine]==0)
+       {
+        led.classList.add('on');
+
+        
+        data[screen-1][row][line][col]&=~(1<<pos);
+        
+        
+       }
+       else{
+        led.classList.add('off');
+       data[screen-1][row][line][col]|=(1<<pos);
+        
+       }
+      
+    });
+
+}

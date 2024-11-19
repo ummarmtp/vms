@@ -51,7 +51,7 @@ button.on{
 .horizontal {
     display: flex; /* Align modules horizontally */
    /* gap: 10px;  Space between modules in a row */
-   background-color:  rgb(215, 207, 207);
+   background-color:   rgb(215, 207, 207);
 }
 .cellcol {
     display: flex;

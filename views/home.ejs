@@ -6,9 +6,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home page</title>
     <link rel="stylesheet" type="text/css" href="/css/home.css">
+    <style>
+        /* input[type="radio"] {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 0%;
+            margin-right: 10px;
+            border: 2px solid #555;
+            outline: none;
+            cursor: pointer;
+        }
+
+        input[type="radio"]:checked {
+            background-color: #555;
+        } */
+        .custom-button {
+            position: relative;
+            height: 25px;
+            cursor: pointer;
+            border: 2px solid #555;
+            border-radius: 5px;
+            background-color: white;
+            transition: background-color 0.3s, border-color 0.3s;
+            display: inline-block;
+            margin: 10px;
+        }
+
+        /* Style for the active (selected) button */
+        .custom-button.selected {
+            background-color: rgb(255, 69, 0);
+            color: white;
+            border-color:  rgb(255, 69, 0);
+        }
+
+        /* Style the text inside the button */
+        .custom-button span {
+            font-size: 14px;
+            display: inline-block;
+        }
+    </style>
 </head>
 
-<body>
+<body style="display: block;">
 
 
     <center>
@@ -17,6 +59,32 @@
     <div class="navButtton">
         <button class="mainButton" id="clearScreen">Clear screen</button>
         <button class="mainButton" id="fillScreen">Fill screen</button>
+      
+            <div style="background-color: rgb(84, 28, 6);"><center>
+
+                <div> <button class=" mainButton " id="uploadimage" >upload Image</button></div>
+                <button class="custom-button" id="button1" disabled>
+                    <span>White</span>
+                </button>
+                <!-- <button class="custom-button" id="button2" disabled>
+                    <span>Color</span> -->
+                </button> 
+                <div>
+                    <button class="custom-button" id="contain" >
+                        <span>contain</span>
+                    </button>
+                    <button class="custom-button" id="fill" >
+                        <span>fill</span>
+                    </button>
+                    <button class="custom-button" id="cover" >
+                        <span>cover</span>
+                    </button> 
+
+                </div> 
+                
+            </center>
+            </div>
+        
 
 
         <div class="screenButton">
@@ -25,38 +93,251 @@
             <button class="button">3</button>
             <button class="button">4</button>
         </div>
-        <input type="number" id="screenTime" name="number">Seconds
-        <button class="mainButton" id="sendDevice" style="margin-right: 10px;">Send to Device</button>
+        <div>
+            <input type="number" id="screenTime" name="number">Seconds
+            <button class="mainButton" id="sendDevice" style="margin-right: 10px;">Send to Device</button>
+        </div>
     </div>
-
-
+    <input type="file" id="myfileinput" accept="image/*" style="display: none;">
     </div>
+ 
     <div id="led-matrix"></div>
+ 
 
     <!-- <script src="script.js"></script> -->
     <script type="text/javascript" src="/js/home.js"></script>
     <script>
+       /// let fileData: new () => any;
              // Connect to the WebSocket server
             //  const socket = new WebSocket('ws://localhost:3000');
             const urlParams = new URLSearchParams(window.location.search);
-          const port = urlParams.get('port') || 10000; // Default port as a fallback
- 
-            const socket=new WebSocket('wss://vms-38ho.onrender.com');
+            const port = urlParams.get('port') || 10000; // Default port as a fallback
+            const sendDeviceSocket=new WebSocket('ws://vms-38ho.onrender.com/senddevice');
+            const uploadImageSocket=new WebSocket('ws://vms-38ho.onrender.com/uploadimage');
+            const ImageFit=new WebSocket('ws://vms-38ho.onrender.com/fit');
+
+
+            sendDeviceSocket.onopen = () => {
+            console.log('WebSocket connection established');
+        };
+
+
+        uploadImageSocket.onopen = () => {
+            console.log('uploadimage socket is ready');
+        };
+
+        ImageFit.onopen = () => {
+            console.log('Image socket is ready');
+        };
+
+
         
-        // socket.onopen = () => {
-        //     console.log('WebSocket connection established');
-        // };
+
+
+        uploadImageSocket.onmessage = (event) => {
+            try {
+                const receivedData = JSON.parse(event.data);
+                let array=receivedData.imagePixcel;
+                console.log('Received data:', array);
+
         
-         socket.onmessage = (event) => {
-             const serverMessage = event.data;
-             alert(serverMessage);
-            // document.getElementById('server-message').innerText = serverMessage;
+
+         const rowBlockSize = 7; // Number of rows per module
+         const colBlockSize = 8; // Number of columns per module
+
+         for (let moduleRow = 0; moduleRow < 4; moduleRow++) {
+             for (let moduleCol = 0; moduleCol < 7; moduleCol++) {
+                 for (let i = 0; i < rowBlockSize; i++) {
+                     for (let j = 0; j < colBlockSize; j++) {
+                         // Calculate the corresponding position in the original imagePixel array
+                         let originalRow = moduleRow * rowBlockSize + i;
+                         let originalCol = moduleCol * colBlockSize + j;
+                         // Assign the value to the corresponding module's element
+                         ImagepixcelModule[moduleRow][moduleCol][i][j] = array[originalRow][originalCol];
+                      //  console.log('Received data:', ImagepixcelModule);
+                        
+                     }
+                    
+                 }
+             }
+         }
+         updateScreenImage(screen,  ImagepixcelModule);
+
+                // Store the data in the array
+                //receivedDataArray.push(receivedData);
+
+                // Update the log on the webpage
+               // logContainer.textContent = JSON.stringify(receivedDataArray, null, 2);
+            } catch (error) {
+                console.error('Error parsing received data:', error);
+            }
          };
         
-        // Send a message to the WebSocket server when the button is clicked
-        // document.getElementById('sendMessageBtn').addEventListener('click', () => {
-        //     socket.send('Hello from the client!');
+      
+
+        //image upload
+        const imageInput = document.querySelector('input[type="file"]');
+        const uploadimage=document.querySelector('#uploadimage');
+         uploadimage.addEventListener('click', ()=>{
+            imageInput.click();
+            uploadimage.classList.add('on');
+            
+    setTimeout(() => {
+        uploadimage.classList.remove('on');
+        //imageInput.click();
+      }, 100);
+      console.log("button pressed");
+            //uploadImageSocket.send("upload");
+        
+
+        });
+
+        // imageInput.addEventListener('change', () => {
+        //     // const file = imageInput.files[0];
+        //     // console.log(this.file);
+        //     // if (file) {
+        //     //     const reader = new FileReader();
+        //     //     reader.onload = () => {
+        //     //       //  const imageData = reader.result; // This contains the base64 encoded image data
+        //     //         uploadImageSocket.send(reader.result); // Sending the image data over WebSocket
+        //     //         console.log(this.file);
+        //     //        // console.log('Image uploaded:', imageData);
+                   
+        //     //     };
+        //     //     reader.readAsDataURL(file); // Read file as base64
+
+        //     // }
+        //     console.log(this.file);
         // });
+        document.querySelector('#myfileinput').addEventListener("change",function(){
+          console.log(this.files);
+          const reader=new FileReader();
+          reader.addEventListener('load',()=>{
+            fileData=reader.result;
+
+            uploadImageSocket.send(reader.result); 
+            
+            button1.disabled = false; // Enable the radio buttons
+            // button2.disabled = false;
+            contain.disabled = false;
+            cover.disabled = false;
+            fill.disabled = false;
+     
+           // localStorage.setItem('recent-image',reader.result);
+          })
+
+          reader.readAsArrayBuffer(this.files[0]);
+        });
+        const button1 = document.getElementById("button1");
+        // const button2 = document.getElementById("button2");
+        const contain = document.getElementById("contain");
+        const fill = document.getElementById("fill");
+        const cover = document.getElementById("cover");
+        
+
+        button1.addEventListener("click", function() {
+            button1.classList.add("selected");
+            // button2.classList.remove("selected");
+            // Store the value of the selected button (0 for button1, 1 for button2)
+            console.log("Selected option: White");
+            // You can store the selected value in a variable or elsewhere as needed
+            color = 0;  // For button1 (White)
+        
+        
+            for (let i = 0; i < 4; i++) {
+                for (let j = 0; j < 7; j++)
+                    for (let k = 0; k < 7; k++) {
+                        for (l = 0; l < 8; l++) {
+                            console.log("start");
+                            ImagepixcelModule[i][j][k][l]=!ImagepixcelModule[i][j][k][l];
+                            console.log("end");
+
+                        }
+                    }
+            }
+          
+        
+         updateScreenImage(screen,ImagepixcelModule);
+        
+         //updateScreenImage(screen,imagePixcel);
+        });
+
+        // button2.addEventListener("click", function() {
+        //     button2.classList.add("selected");
+        //     button1.classList.remove("selected");
+        //     // Store the value of the selected button (0 for button1, 1 for button2)
+        //     console.log("Selected option: Color");
+        //     // You can store the selected value in a variable or elsewhere as needed
+        //     //color = 1;  // For button2 (Color)
+        //     for (let i = 0; i < 4; i++) {
+        //         for (let j = 0; j < 7; j++)
+        //             for (let k = 0; k < 7; k++) {
+        //                 for (l = 0; l < 8; l++) {
+        //                     ImagepixcelModule[i][j][k][l]=!ImagepixcelModule[i][j][k][l];
+
+        //                 }
+        //             }
+        //     }
+          
+        
+        //  updateScreenImage(screen,ImagepixcelModule);
+        // });
+
+
+        contain.addEventListener("click",function(){
+            contain.classList.add("selected");
+            cover.classList.remove("selected");
+            fill.classList.remove("selected");
+          
+            if (ImageFit.readyState === WebSocket.OPEN) {
+                ImageFit.send("contain");
+                console.log("sending");
+      
+    } else {
+        console.log("WebSocket connection is not open");
+    }
+
+
+
+
+        });
+
+
+        cover.addEventListener("click",function(){
+            cover.classList.add("selected");
+            contain.classList.remove("selected");
+            fill.classList.remove("selected");
+            if (ImageFit.readyState === WebSocket.OPEN) {
+        ImageFit.send("contain");
+    } else {
+        console.log("WebSocket connection is not open");
+    }
+            console.log("cover");
+          
+
+        });
+
+
+        fill.addEventListener("click",function(){
+
+            fill.classList.add("selected");
+            cover.classList.remove("selected");
+            contain.classList.remove("selected");
+            if (ImageFit.readyState === WebSocket.OPEN) {
+        ImageFit.send("contain");
+    } else {
+        console.log("WebSocket connection is not open");
+    }
+            console.log("fill");
+           
+
+        });
+
+
+
+
+
+        
 
     </script>
 
