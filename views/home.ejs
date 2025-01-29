@@ -7,22 +7,27 @@
     <title>Home page</title>
     <link rel="stylesheet" type="text/css" href="/css/home.css">
     <style>
-        /* input[type="radio"] {
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 0%;
-            margin-right: 10px;
-            border: 2px solid #555;
-            outline: none;
-            cursor: pointer;
+      #askTextModal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            text-align: center;
         }
-
-        input[type="radio"]:checked {
-            background-color: #555;
-        } */
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
         .custom-button {
             position: relative;
             height: 25px;
@@ -84,7 +89,20 @@
                 
             </center>
             </div>
-        
+        ///
+        <button id="askTextBtn">Enter Text Name</button>
+
+    <!-- Popup Modal -->
+    <div id="overlay"></div>
+    <div id="askTextModal">
+        <h3>Enter Text Name</h3>
+        <input type="text" id="textNameInput" placeholder="Enter text name...">
+        <button id="submitText">Submit</button>
+    </div>
+
+    <p id="response"></p>
+
+        ///
 
 
         <div class="screenButton">

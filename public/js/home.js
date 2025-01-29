@@ -217,6 +217,7 @@ sendDevice.addEventListener('click', ()=>{
         sendDevice.classList.remove('on');
       }, 100);
       //const sum4D = data.flat(Infinity).reduce((acc, val) => acc + val, 0);
+      
 
 
     
