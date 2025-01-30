@@ -235,7 +235,7 @@ if (sendDeviceSocket.readyState === WebSocket.OPEN) {
     const payload={
         data: data,
         screenTime:screenTime,
-        design:DesignName,
+        design:DesignName
         //totalScreen:4
       }
       sendDeviceSocket.send(JSON.stringify(payload));
