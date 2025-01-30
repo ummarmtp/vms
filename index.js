@@ -100,13 +100,13 @@ wssweb.on('connection', (ws) => {
     try {
       console.log(`Received:`);
       const receivedArray = JSON.parse(message);
-      // const checksome=receivedArray.checkSome;
+      
       data = receivedArray.data;
       screenTime = receivedArray.screenTime;
       //totalScreen=receivedArray.totalScreen;
       // console.log('screen1', screenTime);
       if (esp32Connection && esp32Connection.readyState === WebSocket.OPEN) {
-        esp32Connection.send(JSON.stringify({ data, screenTime }));
+        esp32Connection.send(JSON.stringify({message}));
         //console.log('Data sent to ESP32:', { data, screenTime });
         //wssweb.send("message sent");
       }
