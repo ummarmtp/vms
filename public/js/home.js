@@ -225,7 +225,7 @@ sendDevice.addEventListener('click', ()=>{
 });
 
 confirmFilename.addEventListener('click', () => {
-    let DesignName = filenameInput.value.trim();
+    let DesignName = filenameInput.value.trim()+".json";
     if (!DesignName) {
         alert("Filename cannot be empty!");
         return;
