@@ -99,15 +99,15 @@ wssweb.on('connection', (ws) => {
   ws.on('message', (message) => {
     try {
       console.log(`Received:`);
-      const receivedArray = JSON.parse(message);
+      //const receivedArray = JSON.parse(message);
       
       data = receivedArray.data;
       screenTime = receivedArray.screenTime;
+      let designName=receivedArray.designName;
       //totalScreen=receivedArray.totalScreen;
       // console.log('screen1', screenTime);
       if (esp32Connection && esp32Connection.readyState === WebSocket.OPEN) {
-       // esp32Connection.send(JSON.stringify({message}));
-       esp32Connection.send(message);
+        esp32Connection.send(JSON.stringify({ data, screenTime, designName }));
         //console.log('Data sent to ESP32:', { data, screenTime });
         //wssweb.send("message sent");
       }
