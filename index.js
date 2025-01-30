@@ -104,7 +104,7 @@ wssweb.on('connection', (ws) => {
       
       data = receivedArray.data;
       screenTime = receivedArray.screenTime;
-     filename=receivedArray.designName;
+     filename=receivedArray.design;
       //totalScreen=receivedArray.totalScreen;
        console.log('designName', filename);
       if (esp32Connection && esp32Connection.readyState === WebSocket.OPEN) {
