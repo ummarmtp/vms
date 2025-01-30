@@ -7,6 +7,18 @@
     <title>Home page</title>
     <link rel="stylesheet" type="text/css" href="/css/home.css">
     <style>
+
+.modal {
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
      
         .custom-button {
             position: relative;
@@ -69,10 +81,7 @@
                 
             </center>
             </div>
-        ///
-      
-
-        ///
+        
 
 
         <div class="screenButton">
@@ -90,6 +99,17 @@
     </div>
  
     <div id="led-matrix"></div>
+
+    <!-- Modal Structure -->
+<div id="filenameModal" class="modal">
+    <div class="modal-content">
+        <label for="filenameInput">Enter filename:</label>
+        <input type="text" id="filenameInput">
+        <span>.json</span>
+        <button id="confirmFilename">OK</button>
+        <button id="cancelFilename">Cancel</button>
+    </div>
+</div>
  
 
     <!-- <script src="script.js"></script> -->
@@ -117,6 +137,7 @@
         ImageFit.onopen = () => {
             console.log('Image socket is ready');
         };
+        
 
 
         
@@ -317,9 +338,14 @@
         console.log("WebSocket connection is not open");
     }
             console.log("fill");
-           
-
+            
         });
+
+
+const filenameModal = document.getElementById('filenameModal');
+const filenameInput = document.getElementById('filenameInput');
+const confirmFilename = document.getElementById('confirmFilename');
+const cancelFilename = document.getElementById('cancelFilename');
 
 
 

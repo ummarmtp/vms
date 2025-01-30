@@ -219,27 +219,36 @@ sendDevice.addEventListener('click', ()=>{
       //const sum4D = data.flat(Infinity).reduce((acc, val) => acc + val, 0);
       
 
-
-    
-
-      
-
-      if (sendDeviceSocket.readyState === WebSocket.OPEN) {
-        const payload={
-            data: data,
-            screenTime:screenTime,
-            //totalScreen:4
-          }
-          sendDeviceSocket.send(JSON.stringify(payload));
-    } else {
-        console.error('WebSocket is not open. Current state: ' + socket.readyState);
-    }
-
-
+      filenameModal.style.display = 'block';
+    filenameInput.value = ''; // Clear previous value
 
 });
 
+confirmFilename.addEventListener('click', () => {
+    const DesignName = filenameInput.value.trim();
+    if (!DesignName) {
+        alert("Filename cannot be empty!");
+        return;
+    }
 
+if (sendDeviceSocket.readyState === WebSocket.OPEN) {
+    const payload={
+        data: data,
+        screenTime:screenTime,
+        design:DesignName,
+        //totalScreen:4
+      }
+      sendDeviceSocket.send(JSON.stringify(payload));
+} else {
+    console.error('WebSocket is not open. Current state: ' + socket.readyState);
+}
+
+filenameModal.style.display = 'none';
+});
+
+cancelFilename.addEventListener('click', () => {
+    filenameModal.style.display = 'none';
+});
 
 fillScreen.addEventListener('click', ()=>{
 
