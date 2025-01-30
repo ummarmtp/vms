@@ -9,6 +9,7 @@ const server = http.createServer(app);
 let data=0;
 let screenTime=0;
 let totalScreen=0;
+let filename="hello";
 const wssweb = new WebSocket.Server({ noServer: true });
 const wssESP32 = new WebSocket.Server({ noServer: true });
 const uploadimageweb = new WebSocket.Server({ noServer: true });
@@ -103,12 +104,12 @@ wssweb.on('connection', (ws) => {
       
       data = receivedArray.data;
       screenTime = receivedArray.screenTime;
-      let designName=receivedArray.designName;
+     filename=receivedArray.designName;
       //totalScreen=receivedArray.totalScreen;
-      // console.log('screen1', screenTime);
+       console.log('designName', filename);
       if (esp32Connection && esp32Connection.readyState === WebSocket.OPEN) {
-        console.log('Data sent to ESP32:', JSON.stringify({ data, screenTime, designName }));
-        esp32Connection.send(JSON.stringify({ data, screenTime, designName }));
+        console.log('Data sent to ESP32:', JSON.stringify({ data, screenTime, filename }));
+        esp32Connection.send(JSON.stringify({ data, screenTime, filename }));
         //console.log('Data sent to ESP32:', { data, screenTime });
         //wssweb.send("message sent");
       }
