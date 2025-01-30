@@ -230,14 +230,16 @@ confirmFilename.addEventListener('click', () => {
         alert("Filename cannot be empty!");
         return;
     }
+    console.log(DesignName);
 
 if (sendDeviceSocket.readyState === WebSocket.OPEN) {
     const payload={
         data: data,
         screenTime:screenTime,
-        design:DesignName
+        design:DesignName,
         //totalScreen:4
       }
+      console.log("Payload:", JSON.stringify(payload));
       sendDeviceSocket.send(JSON.stringify(payload));
 } else {
     console.error('WebSocket is not open. Current state: ' + socket.readyState);
