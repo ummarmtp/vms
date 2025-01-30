@@ -99,7 +99,7 @@ wssweb.on('connection', (ws) => {
   ws.on('message', (message) => {
     try {
       console.log(`Received:`);
-      //const receivedArray = JSON.parse(message);
+      const receivedArray = JSON.parse(message);
       
       data = receivedArray.data;
       screenTime = receivedArray.screenTime;
