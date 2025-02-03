@@ -91,7 +91,7 @@
             <button class="button">4</button>
         </div>
         <div>
-            <input type="number" id="screenTime" name="number">mS
+            <input type="text" id="screenTime" name="number" inputmode="numeric" pattern="\\d{1,5}" maxlength="5" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,5)">mS
             <button class="mainButton" id="sendDevice" style="margin-right: 10px;">Send to Device</button>
         </div>
     </div>
@@ -116,18 +116,7 @@
     <script type="text/javascript" src="/js/home.js"></script>
     <script>
 ///slice mSecound less more than 90000mS
-function validateInput(input) {
-    // Convert value to string and remove any non-numeric characters
-    let value = input.value.replace(/\D/g, ''); 
 
-    // Limit to 5 digits
-    if (value.length > 5) {
-      value = value.slice(0, 5);
-    }
-
-    // Update input field
-    input.value = value;
-  }
   
        /// let fileData: new () => any;
              // Connect to the WebSocket server
