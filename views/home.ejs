@@ -115,6 +115,12 @@
     <!-- <script src="script.js"></script> -->
     <script type="text/javascript" src="/js/home.js"></script>
     <script>
+///slice mSecound less more than 90000mS
+function validateInput(input) {
+    if (input.value.length > 5) {
+      input.value = input.value.slice(0, 5); // Trim extra characters
+    }
+  }
        /// let fileData: new () => any;
              // Connect to the WebSocket server
             //  const socket = new WebSocket('ws://localhost:3000');
