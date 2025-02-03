@@ -22,7 +22,7 @@ for (let i = 0; i < 4; i++) {
     }
 }
 
-let screenTime=new Array(4).fill(3);
+let screenTime=new Array(4).fill(1000);
 const Time=document.querySelector('#screenTime');
 
 Time.value=screenTime[screen-1];
