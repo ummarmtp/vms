@@ -117,11 +117,18 @@
     <script>
 ///slice mSecound less more than 90000mS
 function validateInput(input) {
-    if (input.value.length > 5) {
-      input.value = input.value.slice(0, 5); // Trim extra characters
-      input.value = value;
+    // Convert value to string and remove any non-numeric characters
+    let value = input.value.replace(/\D/g, ''); 
+
+    // Limit to 5 digits
+    if (value.length > 5) {
+      value = value.slice(0, 5);
     }
+
+    // Update input field
+    input.value = value;
   }
+  
        /// let fileData: new () => any;
              // Connect to the WebSocket server
             //  const socket = new WebSocket('ws://localhost:3000');
