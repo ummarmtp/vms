@@ -23,7 +23,7 @@ app.use(express.urlencoded({extended :false}))
 const port =process.env.PORT || 3000;;
 let imagefit='contain';
 let processedBuffer;
-  
+  let imageStorage;
 let imagePixcel = Array.from({ length: 28 }, () => Array(56).fill(0));
 
 
@@ -75,8 +75,9 @@ Imagefit.on('connection',(ws) =>{
    imagefit=message;
     console.log(`Image fit mode updated to: ${imagefit}`);
     // processImageBuffer(processedBuffer);
-    if (processedBuffer) {
-      await processImageBuffer(processedBuffer);
+    if (imageStorage) {
+      await processImageBuffer(imageStorage);
+      
   }
 
   });
@@ -171,6 +172,7 @@ uploadimageweb.on('connection', (ws) => {
                 ws.send('Binary image received and saved');
             }
         });
+        imageStorage=message;
         await processImageBuffer(message);
     } else if (typeof message === 'string' && message.startsWith('data:image/')) {
         // If message is a Base64 string
@@ -185,6 +187,7 @@ uploadimageweb.on('connection', (ws) => {
                 ws.send('Base64 image received and saved');
             }
         });
+        imageStorage=buffer;
         await processImageBuffer(buffer);
     } else {
         console.error('Unsupported message format or data encoding');
