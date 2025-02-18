@@ -71,7 +71,7 @@ Imagefit.on('connection',(ws) =>{
   console.log('New WebSocket imagefit');
   ws.on('message', async(message)=>{
  
-   console(message); //
+   //console(message); //
    imagefit=message;
     console.log(`Image fit mode updated to: ${imagefit}`);
     // processImageBuffer(processedBuffer);
