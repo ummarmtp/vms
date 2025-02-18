@@ -69,19 +69,23 @@ app.get('/', async(req, res) => {
 //imagefit
 Imagefit.on('connection',(ws) =>{
   console.log('New WebSocket imagefit');
-  ws.on('messsage', async(message)=>{
+  ws.on('message', async(message)=>{
  
-   console(message); //imagefit=message;
-    console.log(hello);
+   console(message); //
+   imagefit=message;
+    console.log(`Image fit mode updated to: ${imagefit}`);
     // processImageBuffer(processedBuffer);
+    if (processedBuffer) {
+      await processImageBuffer(processedBuffer);
+  }
 
   });
 
-  Imagefit.onerror = (error) => {
+  ws.onerror = (error) => {
     console.error('WebSocket error:', error);
 };
  // Handle connection close
- Imagefit.on('close', () => {
+ ws.on('close', () => {
   console.log('WebSocket connection closed');
 
 });
