@@ -320,7 +320,7 @@
             contain.classList.remove("selected");
             fill.classList.remove("selected");
             if (ImageFit.readyState === WebSocket.OPEN) {
-        ImageFit.send("contain");
+        ImageFit.send("cover");
     } else {
         console.log("WebSocket connection is not open");
     }
@@ -336,7 +336,7 @@
             cover.classList.remove("selected");
             contain.classList.remove("selected");
             if (ImageFit.readyState === WebSocket.OPEN) {
-        ImageFit.send("contain");
+        ImageFit.send("fill");
     } else {
         console.log("WebSocket connection is not open");
     }
